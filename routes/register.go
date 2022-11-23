@@ -31,10 +31,11 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	_, userExist, _ := db.UserExists(userModel.Email)
 	if userExist {
 		http.Error(w, "The user already exists", http.StatusBadRequest)
+		return 
 	}
 
 	_, status, err := db.RegisterUser(userModel)
-	if err != nil || status == false {
+	if err != nil || !status {
 		http.Error(w, "Unexpected error trying register user" + err.Error(), http.StatusInternalServerError)
 		return
 	}
