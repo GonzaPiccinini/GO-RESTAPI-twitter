@@ -22,7 +22,7 @@ func TokenProcess(tokenStr string) (*models.Claim, bool, string, error) {
 
 	splitToken := strings.Split(tokenStr, "Bearer")
 	if len(splitToken) != 2 {
-		return claims, false, string(""), errors.New("Invalid format token")
+		return claims, false, string(""), errors.New("invalid format token")
 	}
 	
 	tokenStr = strings.TrimSpace(splitToken[1])
@@ -40,7 +40,7 @@ func TokenProcess(tokenStr string) (*models.Claim, bool, string, error) {
 		return claims, userExist, UserID, nil
 	}
 	if !token.Valid {
-		return claims, false, string(""), errors.New("Invalid token")
+		return claims, false, string(""), errors.New("invalid token")
 	}
 	
 	return claims, false, string(""), err
