@@ -7,7 +7,7 @@ import (
 	"github.com/GonzaPiccinini/GO-RESTAPI-twitter/db"
 )
 
-// ShowProfile is the route to show the profile user
+// ShowProfile is the controller to show the profile user
 func ShowProfile(w http.ResponseWriter, r *http.Request) {
 	ID := r.URL.Query().Get("id")
 	if len(ID) < 1 {
