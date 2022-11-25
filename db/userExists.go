@@ -16,11 +16,11 @@ func UserExists(email string) (models.User, bool, string) {
 	database := MongoCNN.Database("GolangDB")
 	collection := database.Collection("users")
 
-	validation := bson.M{"email": email}
+	condition := bson.M{"email": email}
 
 	var result models.User
 
-	err := collection.FindOne(ctx, validation).Decode(&result)
+	err := collection.FindOne(ctx, condition).Decode(&result)
 	ID := result.ID.Hex()
 	if err != nil {
 		return result, false, ID
