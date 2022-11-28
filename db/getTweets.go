@@ -25,9 +25,9 @@ func GetTweets(ID string, page int64) ([]*models.GetTweets, bool) {
 	}
 
 	option := options.Find()
+	option.SetSort(bson.D{{ Key: "date", Value: -1 }})
+	option.SetSkip((page - 1) * 20)
 	option.SetLimit(20)
-	option.SetSort(bson.D{{ Key: "date", Value: -1} })
-	option.SetSkip((page -1) * 20)
 
 	index, err := collection.Find(ctx, condition, option)
 	if err != nil {
@@ -44,5 +44,5 @@ func GetTweets(ID string, page int64) ([]*models.GetTweets, bool) {
 		result = append(result, &register)
 	}
 
-	return  result, true 
+	return result, true 
 }

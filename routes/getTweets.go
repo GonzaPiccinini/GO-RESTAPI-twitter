@@ -8,6 +8,7 @@ import (
 	"github.com/GonzaPiccinini/GO-RESTAPI-twitter/db"
 )
 
+// GetTweets controller allows returns a user's tweets
 func GetTweets(w http.ResponseWriter, r *http.Request) {
 	ID := r.URL.Query().Get("id")
 	if len(ID) < 1 {
@@ -19,8 +20,8 @@ func GetTweets(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "page param is required", http.StatusBadRequest)
 		return 
 	}
-	pageStr, err := strconv.Atoi(r.URL.Query().Get("page"))
-	if err != nil {
+	pageStr, _ := strconv.Atoi(r.URL.Query().Get("page"))
+	if pageStr < 1 {
 		http.Error(w, "page param must be greater than 0", http.StatusBadRequest)
 		return 
 	}
@@ -28,7 +29,7 @@ func GetTweets(w http.ResponseWriter, r *http.Request) {
 
 	result, status := db.GetTweets(ID, page)
 	if !status {
-		http.Error(w, "Unexpected error trying get tweets", http.StatusInternalServerError)
+		http.Error(w, "Unexpected error trying get tweets", http.StatusBadRequest)
 		return 
 	}
 
